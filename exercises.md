@@ -30,11 +30,11 @@ critical.
 
 | Metric | Acceptable Low Score Scenario | Critical Low Score Scenario | Action Required |
 |---|---|---|---|
-| Faithfulness | | | |
-| Answer Relevance | | | |
-| Context Recall | | | |
-| Context Precision | | | |
-| Completeness | | | |
+| Faithfulness - Độ trung thực | Các ứng dụng sáng tạo(sáng tác thơ, sáng tác nhạc, hội họa,...) | Q&A trên các tài liệu yêu cầu độ chính xác tuyệt đối, không được bịa đặt như: Luật pháp, y tế, Chính sách,.., tuy nhiên model lại bịa hoặc trả lời không chính xác | Yêu cầu model dự đoán theo greedy - chọn token có scored max - temp = 0 |
+| Answer Relevance - Độ liên quan của câu trả lời | Khi người dùng đưa ra câu hỏi quá ngắn, mơ hồ chung chung -> hệ thống có thể hỏi lại hoặc trả lời chung chung mang tính định hướng | Truy vấn rõ ràng, tuy nhiên câu trả lời lan man, không đúng trọng tâm, không giải quyết được vấn đề người dùng | Cải thiện lại prompt tập chung vào nhận dạng intent user hoặc có thể few shot một vài example |
+| Context Recall - Độ đầy đủ của truy xuất | User hỏi câu hỏi ngoài domain trong knowledge base -> model return về xin lồi vì ngoài phạm vi trả lời | Question của user liên quan đến 3 tài liệu khác nhau nhưng retrive chỉ trả về 1 tài liệu -> thiếu context | Tăng số lượng k, hoặc đổi stragery chunk, hoặc sử dụng hybird search - Dense and Sparse |
+| Context Precision - Độ chính xác của truy xuất | Nếu retrive trả về 5 chunk, và context cần truy xuất nằm trong chunk 4, 5 thì có thể chấp nhận được | Retrive trả về 5 chunk nhưng context cần truy vấn không nằm trong 5 chunk - thiếu context trả lời có thể trả lời sai | Áp dụng reranker sau retrive hoặc cải thiện filter theo metadata để truy vấn tốt hơn |
+| Completeness - Độ hoàn thiện của câu trả lời | Trả lời cho các câu hỏi mở chung chung | Tổng quan thái quát khiến mất đi các khâu quan trọng  | Tinh chỉnh lại promt thêm cac rule yêu cầu model trả lời một cách đầy đủ   |
 
 ### Exercise 1.2 — Bias trong LLM-as-a-Judge
 
@@ -46,15 +46,15 @@ Ba bias thường gặp:
 
 **Câu 1: Thiết kế experiment phát hiện position bias với ít nhất hai conditions.**
 
-> *Câu trả lời:*
+> *Câu trả lời:* - Cho cùng một câu hỏi với lượt đánh giá [A, B], lượt 2 đảo lại [B, A] -> Nếu đáp án nào đứng trước cũng thắng thì position bias do LLM - transformer chú ý nhiều đến các thông tin ở đầu và cuối - lost mid
 
 **Câu 2: Làm thế nào giảm verbosity bias bằng rubric design?**
 
-> *Câu trả lời:*
+> *Câu trả lời:* Verbosity bias là model thường bị đánh lừa bởi các câu viết dài , viết hoa văn mặc cho chất lượng nội dung trong đó thấp -> Khắc phụ trong Rubric design thiết kê rule phạt các câu trả lời lan man không đúng trọng tâm, ưu tiên trả lời cốt lõi, đúng vấn đề 
 
 **Câu 3: Tại sao cần calibrate LLM judge với human labels?**
 
-> *Câu trả lời:*
+> *Câu trả lời:* Model không có trải nghiệm thực tế của con người, model có thể chấm cao cho câu trả lời nghe rất hay và mượt nhưng với con người thì nó lại sai hoặc chưa hoàn toàn đúng
 
 ### Exercise 1.3 — Evaluation trong CI/CD
 
@@ -62,13 +62,13 @@ Ba bias thường gặp:
 
 | Metric | Threshold | Lý do |
 |---|---:|---|
-| Faithfulness | | |
-| Answer Relevance | | |
-| Completeness | | |
+| Faithfulness | > 0.85 | Tính chính xác quyết định sự sống còn của hệ thống RAG, người dùng thà nghe câu xin lỗi vì không có thông tin còn hơn là nghe câu trả lời bịa không đúng |
+| Answer Relevance | >0.8 | Tập trung vào vấn đề chính, tránh lan man dài dòng |
+| Completeness | >0.7 | Một câu trả lời có nội dung liên quan 80% context cần truy vấn vẫn mang lại phần nào giá trị cho người dùng, thiếu một vài ý nhỏ không gây nguy hiểm bằng bịa sai sự thật |
 
 **Câu 2: Khi nào dùng offline evaluation, online evaluation và human review?**
 
-> *Câu trả lời:*
+> *Câu trả lời:* Dùng offline trong giai đoạn development, thử nghiệm. Dùng online trong giai đoạn product có người dùng hằng ngày. Human review trong giai đoạn xây dụng golden Dataset, Calib LLM as a judge, Kiểm tra mẫu với các trường hợp được gắn cờ Low score
 
 ---
 
