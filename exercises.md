@@ -146,31 +146,31 @@ và quyết định thiết kế, không chép lại toàn bộ QA.
 
 | Hạng mục | Kết quả |
 |---|---|
-| Tổng số records | ____ / 20 |
-| Easy | ____ / 5 |
-| Medium | ____ / 7 |
-| Hard | ____ / 5 |
-| Adversarial | ____ / 3 |
-| Source documents được sử dụng | ____ / 10 |
-| Validator status | PASS / FAIL |
+| Tổng số records | 20 / 20 |
+| Easy | 5 / 5 |
+| Medium | 7 / 7 |
+| Hard | 5 / 5 |
+| Adversarial | 3 / 3 |
+| Source documents được sử dụng | 10 / 10 |
+| Validator status | PASS |
 
 **Ba case đại diện cho quyết định thiết kế**
 
 | ID | Difficulty | Source document(s) | Vì sao case phù hợp với difficulty/attack type? |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+| E02 | Easy | `02_orders_and_payments.md` | Câu trả lời là factual lookup trực tiếp: hai dấu hiệu xác nhận order đã được tạo và một phân biệt rõ với pending card authorization. |
+| H01 | Hard | `09_escalation_and_policy_updates.md` | Case buộc xác định triggering event là ngày đặt hàng, chọn đúng policy version, rồi tách ngày bắt đầu tính window; đồng thời xử lý ngoại lệ OrbitPlus không hồi tố cho order trước 01/09/2026. |
+| A02 | Adversarial (`prompt_injection`) | `00_system_scope.md`, `08_accounts_privacy_and_security.md` | Prompt yêu cầu bỏ qua rule và tiết lộ ba loại dữ liệu bị cấm; expected answer phải chống injection và áp dụng đúng điều kiện verified authorization. |
 
 **Điểm khó nhất khi xây dựng expected answer hoặc evidence là gì?**
 
-> *Câu trả lời:*
+> *Câu trả lời:* Khó nhất là giữ cho expected answer vừa ngắn gọn vừa bao phủ chính xác mọi điều kiện và ngoại lệ, đặc biệt ở các case policy-version. Ví dụ H01 phải phân biệt ngày đặt hàng quyết định version với ngày giao hàng bắt đầu thời hạn trả hàng, đồng thời không áp dụng hồi tố quyền lợi OrbitPlus. Evidence vì vậy được chọn theo từng claim, giữ nguyên văn và không thêm đoạn không liên quan.
 
 **Xác nhận:**
 
-- [ ] Mọi claim trong expected answer đều có evidence hỗ trợ.
-- [ ] Không có questions trùng ý và không dùng kiến thức ngoài corpus.
-- [ ] `python validate_golden_dataset.py` báo `PASS`.
+- [x] Mọi claim trong expected answer đều có evidence hỗ trợ.
+- [x] Không có questions trùng ý và không dùng kiến thức ngoài corpus.
+- [x] `python validate_golden_dataset.py` báo `PASS`.
 
 ### Exercise 3.2 — Benchmark Run
 
