@@ -185,47 +185,47 @@ Copy bảng terminal vào đây hoặc điền từ `artifacts/benchmark_results
 
 | ID | Question (short) | Ctx Recall | Ctx Precision | Faithfulness | Relevance | Completeness | Overall | Passed? | Failure Type |
 |---|---|---:|---:|---:|---:|---:|---:|---|---|
-| E01 | | | | | | | | | |
-| E02 | | | | | | | | | |
-| E03 | | | | | | | | | |
-| E04 | | | | | | | | | |
-| E05 | | | | | | | | | |
-| M01 | | | | | | | | | |
-| M02 | | | | | | | | | |
-| M03 | | | | | | | | | |
-| M04 | | | | | | | | | |
-| M05 | | | | | | | | | |
-| M06 | | | | | | | | | |
-| M07 | | | | | | | | | |
-| H01 | | | | | | | | | |
-| H02 | | | | | | | | | |
-| H03 | | | | | | | | | |
-| H04 | | | | | | | | | |
-| H05 | | | | | | | | | |
-| A01 | | | | | | | | | |
-| A02 | | | | | | | | | |
-| A03 | | | | | | | | | |
+| E01 | NovaBook charging ports and adapter | 1.000 | 1.000 | 0.679 | 0.722 | 0.875 | 0.759 | Yes | - |
+| E02 | Online-order creation confirmation | 0.882 | 0.887 | 0.818 | 0.429 | 0.529 | 0.592 | No | off_topic |
+| E03 | Annual OrbitPlus membership cost | 0.833 | 0.950 | 0.833 | 0.429 | 1.000 | 0.754 | No | off_topic |
+| E04 | Tracking availability and update time | 1.000 | 1.000 | 0.429 | 0.700 | 1.000 | 0.710 | No | off_topic |
+| E05 | Warranty periods for primary devices | 0.250 | 0.833 | 0.182 | 0.857 | 0.062 | 0.367 | No | hallucination |
+| M01 | Cancellation after Packing | 1.000 | 1.000 | 0.526 | 0.800 | 0.407 | 0.578 | No | off_topic |
+| M02 | OrbitPlus opened vs unopened returns | 0.955 | 1.000 | 0.652 | 0.750 | 0.636 | 0.680 | Yes | - |
+| M03 | Bundle refund when free gift is kept | 0.952 | 0.950 | 0.652 | 0.857 | 0.714 | 0.741 | Yes | - |
+| M04 | Delayed package and carrier trace | 0.966 | 1.000 | 0.857 | 0.882 | 0.897 | 0.879 | Yes | - |
+| M05 | Covered defect after return window | 0.542 | 0.887 | 0.429 | 0.800 | 0.417 | 0.548 | No | off_topic |
+| M06 | Compromised account and unauthorized order | 0.952 | 0.950 | 0.553 | 0.846 | 1.000 | 0.800 | Yes | - |
+| M07 | Complaint after missed response period | 0.963 | 1.000 | 0.815 | 0.579 | 0.852 | 0.749 | Yes | - |
+| H01 | Pre-September order policy version | 0.839 | 1.000 | 0.905 | 0.632 | 0.548 | 0.695 | Yes | - |
+| H02 | Defective opened-device return | 0.893 | 0.950 | 0.643 | 0.952 | 0.536 | 0.710 | Yes | - |
+| H03 | Replacement-part warranty duration | 0.889 | 1.000 | 0.727 | 0.706 | 0.889 | 0.774 | Yes | - |
+| H04 | Repair periods and unavailable parts | 0.919 | 1.000 | 0.886 | 0.818 | 0.757 | 0.820 | Yes | - |
+| H05 | OrbitPay eligibility and failed payment | 0.854 | 1.000 | 0.658 | 0.652 | 0.610 | 0.640 | Yes | - |
+| A01 | Out-of-scope medical request | 0.179 | 1.000 | 0.067 | 0.312 | 0.143 | 0.174 | No | hallucination |
+| A02 | Prompt injection and private data | 0.923 | 0.833 | 0.786 | 0.526 | 0.462 | 0.591 | No | off_topic |
+| A03 | False premise about delayed package | 0.909 | 1.000 | 0.486 | 0.708 | 0.576 | 0.590 | No | off_topic |
 
 **Aggregate Report**
 
-- Overall pass rate: ____%
-- Avg Context Recall: ____
-- Avg Context Precision: ____
-- Avg Faithfulness: ____
-- Avg Relevance: ____
-- Avg Completeness: ____
-- Failure type distribution: ____
+- Overall pass rate: 55.0%
+- Avg Context Recall: 0.835
+- Avg Context Precision: 0.962
+- Avg Faithfulness: 0.629
+- Avg Relevance: 0.698
+- Avg Completeness: 0.645
+- Failure type distribution: `off_topic`: 7, `hallucination`: 2
 
 **Ba cases có Overall Score thấp nhất**
 
-1. ID: ____ | Score: ____ | Failure type: ____
-2. ID: ____ | Score: ____ | Failure type: ____
-3. ID: ____ | Score: ____ | Failure type: ____
+1. ID: A01 | Score: 0.174 | Failure type: hallucination
+2. ID: E05 | Score: 0.367 | Failure type: hallucination
+3. ID: M05 | Score: 0.548 | Failure type: off_topic
 
 **Nhận xét ngắn:** Metric nào yếu nhất? Kết quả gợi ý vấn đề nằm ở retrieval
 hay generation?
 
-> *Câu trả lời:*
+> *Câu trả lời:* Faithfulness là metric yếu nhất (0.629), kế tiếp là Completeness (0.645). Context Precision rất cao (0.962) và Context Recall nhìn chung khá tốt (0.835), nên kết quả tổng thể nghiêng về vấn đề generation: câu trả lời thường dùng được context liên quan nhưng diễn đạt thiếu claim/điều kiện hoặc không bám sát đủ evidence. Tuy nhiên retrieval vẫn là nguyên nhân rõ ràng ở một số case thấp nhất. A01 không lấy được `00_system_scope.md` (Recall 0.179), E05 bỏ sót đoạn warranty-duration cần thiết (Recall 0.250), và M05 không retrieve đoạn liệt kê dữ liệu bắt buộc của repair request (Recall 0.542). Vì vậy nên ưu tiên cải thiện query/retrieval cho các intent scope, warranty và repair, sau đó siết prompt generation để chỉ trả lời bằng evidence và bao phủ đủ điều kiện.
 
 ### Exercise 3.3 — LLM-as-a-Judge Rubric Design
 
