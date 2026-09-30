@@ -397,14 +397,14 @@ def rerank_by_overlap(contexts: list[str], query: str) -> list[str]:
     Hint: sorted(contexts, key=lambda c: len(_tokenize(c) & _tokenize(query)),
                  reverse=True)
     """
-    # TODO (Bonus — Exercise 3.5): implement the reranker
+    # ``sorted`` is stable, so chunks with the same overlap keep the retriever's
+    # original order.  Return a new list and never mutate/add/drop contexts.
     query_tokens = _tokenize(query)
-    ranked_contexts = sorted(
+    return sorted(
         contexts,
         key=lambda c: len(_tokenize(c) & query_tokens),
-        reverse=True
+        reverse=True,
     )
-    return ranked_contexts
 
 
 # ---------------------------------------------------------------------------
